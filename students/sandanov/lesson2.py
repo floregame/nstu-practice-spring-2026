@@ -10,7 +10,7 @@ class LinearRegression:
         self.bias = np.array(0.0)
 
     def predict(self, x: np.ndarray) -> np.ndarray:
-        return self.bias + np.dot(x,  self.weights)
+        return self.bias + np.dot(x, self.weights)
 
     def loss(self, x: np.ndarray, y: np.ndarray) -> float:
         y_pred = self.predict(x)
@@ -26,7 +26,7 @@ class LinearRegression:
     def grad(self, x, y) -> tuple[np.ndarray, np.ndarray]:
         y_pred = self.predict(x)
         n = len(y)
-        grad_w = (2 / n) * np.dot(x.T,(y_pred - y))
+        grad_w = (2 / n) * np.dot(x.T, (y_pred - y))
         grad_b = (2 / n) * np.sum(y_pred - y)
         return grad_w, grad_b
 
@@ -40,7 +40,7 @@ class LogisticRegression:
         self.bias = np.array(0.0)
 
     def predict(self, x: np.ndarray) -> np.ndarray:
-        z = np.dot(x,self.weights) + self.bias
+        z = np.dot(x, self.weights) + self.bias
         return 1 / (1 + np.exp(-z))
 
     def loss(self, x: np.ndarray, y: np.ndarray) -> float:
@@ -61,6 +61,7 @@ class LogisticRegression:
         grad_b = (1 / n) * np.sum(p - y)
         return grad_w, grad_b
 
+
 class Exercise:
     @staticmethod
     def get_student() -> str:
@@ -79,9 +80,7 @@ class Exercise:
         return LogisticRegression(num_features, rng or np.random.default_rng())
 
     @staticmethod
-    def fit(
-        model: LinearRegression | LogisticRegression, x: np.ndarray, y: np.ndarray, lr: float, n_iter: int
-    ) -> None:
+    def fit(model: LinearRegression | LogisticRegression, x: np.ndarray, y: np.ndarray, lr: float, n_iter: int) -> None:
         for _ in range(n_iter):
             grad_w, grad_b = model.grad(x, y)
             model.weights -= lr * grad_w
